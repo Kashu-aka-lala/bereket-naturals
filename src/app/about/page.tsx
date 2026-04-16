@@ -1,10 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Shield, Leaf, Heart, Users, ShieldCheck } from "lucide-react";
-import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { Leaf, Heart, Users, ShieldCheck, Mail, GraduationCap, Briefcase, X, ArrowRight } from "lucide-react";
+
+import { boardMembers, type BoardMember } from "@/data/leadership";
 
 export default function AboutPage() {
+  const [selectedMember, setSelectedMember] = useState<BoardMember | null>(null);
+
   return (
     <main className="pb-24">
       {/* Hero */}
@@ -101,42 +105,178 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership Showcase */}
-      <section id="leadership" className="py-24 bg-white">
-        <div className="container mx-auto px-4">
+      <section id="leadership" className="py-24 bg-white relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -mr-48 -mt-48"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -ml-48 -mb-48"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-primary font-bold tracking-widest uppercase mb-2">Our Leadership</h2>
-            <h3 className="text-4xl font-extrabold text-foreground mb-6">Visionaries Behind the Abundance</h3>
-            <p className="text-lg text-gray-600">
-              Our leadership team brings decades of global experience in food science, supply chain logistics, and corporate governance to drive the Bereket Naturals mission forward.
+            <h2 className="text-primary font-bold tracking-widest uppercase mb-2">Board of Honors</h2>
+            <h3 className="text-4xl md:text-5xl font-serif font-black text-primary leading-tight">Meet the Visionaries</h3>
+            <p className="text-lg text-gray-600 mt-4 leading-relaxed">
+              A team of seasoned professionals with decades of combined experience driving excellence across FMCG, healthcare, and food industries.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
-             {[
-               { name: "Executive Leadership", role: "Chief Executive Officer", bio: "With a passion for nutrition and a track record of scaling FMCG giants, our CEO leads the strategic vision for global expansion." },
-               { name: "Strategic Direction", role: "Managing Director", bio: "Expert in operational excellence and sustainable sourcing, ensuring our 'Naturals' promise is met at every step." },
-               { name: "Innovation Lead", role: "Director of R&D", bio: "The mind behind our extrusion technology, specializing in the intersection of grain science and human health." }
-             ].map((leader, i) => (
-                <motion.div 
-                  key={i}
-                  whileHover={{ y: -10 }}
-                  className="bg-gray-50 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 group"
-                >
-                  <div className="h-80 bg-gray-200 relative overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
-                    {/* Placeholder for leader photo */}
-                    <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                      <Users className="w-20 h-20 opacity-20" />
+          {/* Featured Executive Messages */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
+            {boardMembers.slice(0, 2).map((leader, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-[3rem] overflow-hidden shadow-2xl border border-primary/5 flex flex-col md:flex-row group"
+              >
+                <div className="md:w-2/5 relative overflow-hidden bg-primary/10">
+                  <img 
+                    src={i === 0 ? "/assets/images/leadership/ceo_new.png" : "/assets/images/leadership/md_new.png"} 
+                    alt={leader.name} 
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 hover:scale-110"
+                  />
+                  <div className="absolute bottom-6 left-6 right-6 p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
+                    <div className="text-[10px] tracking-[0.2em] uppercase font-bold text-accent mb-1">
+                      {i === 0 ? "CEO&apos;s" : "MD&apos;s"} MESSAGE
                     </div>
                   </div>
-                  <div className="p-8">
-                    <h4 className="font-bold text-2xl text-foreground mb-1">{leader.name}</h4>
-                    <p className="text-primary font-semibold text-sm uppercase tracking-widest mb-4">{leader.role}</p>
-                    <p className="text-gray-600 text-sm leading-relaxed">{leader.bio}</p>
+                </div>
+                <div className="md:w-3/5 p-8 lg:p-10 flex flex-col justify-center">
+                  <h4 className="text-2xl font-serif font-bold text-primary mb-1">{leader.name}</h4>
+                  <p className="text-accent text-xs font-bold tracking-widest uppercase mb-6 truncate">{leader.creds}</p>
+                  
+                  <div className="relative">
+                    <span className="absolute -top-6 -left-2 text-6xl text-primary/10 font-serif leading-none">&quot;</span>
+                    <p className="text-gray-600 text-[13px] leading-relaxed italic relative z-10">
+                      {leader.message}
+                    </p>
                   </div>
+
+                  <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
+                    <a href={`mailto:${leader.email}`} className="text-primary hover:text-accent transition-colors flex items-center gap-2 text-sm font-medium">
+                      <Mail className="w-4 h-4" />
+                      {leader.email}
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Board of Honors Grid */}
+          <div className="pt-20 border-t border-primary/10">
+            <div className="text-center mb-12">
+               <h4 className="text-2xl font-serif font-bold text-primary mb-2">Corporate Leadership</h4>
+               <p className="text-gray-500 text-sm">Providing strategic guidance and driving operational excellence</p>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
+              {boardMembers.map((member, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ y: -5 }}
+                  className="bg-gray-50 rounded-3xl p-6 border border-primary/5 shadow-sm hover:shadow-xl hover:bg-white transition-all group text-center"
+                >
+                  <div className="relative w-32 h-32 mx-auto mb-6">
+                    <div className="absolute inset-0 rounded-full border-2 border-accent/20 group-hover:border-accent group-hover:rotate-12 transition-all duration-500"></div>
+                    <img 
+                      src={member.image} 
+                      alt={member.name} 
+                      className="w-full h-full rounded-full object-cover grayscale group-hover:grayscale-0 transition-all p-1"
+                    />
+                  </div>
+                  <h5 className="font-bold text-lg text-primary mb-1">{member.name}</h5>
+                  <p className="text-xs text-gray-500 font-medium uppercase tracking-wider mb-6 leading-tight min-h-[2.5rem] flex items-center justify-center">
+                    {member.designation}
+                  </p>
+                  <button 
+                    onClick={() => setSelectedMember(member)}
+                    className="w-full py-3 bg-white border border-primary/10 rounded-xl text-primary text-xs font-bold hover:bg-primary hover:text-white transition-all shadow-sm"
+                  >
+                    View Profile
+                  </button>
                 </motion.div>
-             ))}
+              ))}
+            </div>
           </div>
         </div>
+
+        {/* Modal for Member Details */}
+        <AnimatePresence>
+          {selectedMember && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-primary/90 backdrop-blur-sm"
+              onClick={() => setSelectedMember(null)}
+            >
+              <motion.div 
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                className="bg-white rounded-[3rem] max-w-4xl w-full overflow-hidden flex flex-col md:grid md:grid-cols-5 shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="md:col-span-2 bg-primary flex flex-col items-center justify-center p-12 text-center relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/black-linen.png')] opacity-10"></div>
+                  <div className="relative z-10">
+                    <div className="w-48 h-48 rounded-full border-4 border-accent p-2 mb-6">
+                      <img src={selectedMember.image} alt={selectedMember.name} className="w-full h-full rounded-full object-cover" />
+                    </div>
+                    <div className="h-0.5 w-12 bg-accent mx-auto mb-6"></div>
+                    <h3 className="text-white text-3xl font-serif font-bold mb-2">{selectedMember.name}</h3>
+                    <p className="text-accent font-bold uppercase tracking-[0.2em] text-[10px]">{selectedMember.designation}</p>
+                  </div>
+                </div>
+                <div className="md:col-span-3 p-8 lg:p-12 relative">
+                  <button 
+                    onClick={() => setSelectedMember(null)}
+                    className="absolute top-8 right-8 text-gray-400 hover:text-primary transition-colors"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+
+                  <div className="space-y-10">
+                    <div>
+                      <div className="flex items-center gap-2 text-primary font-bold tracking-widest text-xs uppercase mb-4">
+                        <GraduationCap className="w-4 h-4 text-accent" /> Qualifications
+                      </div>
+                      <ul className="grid grid-cols-1 gap-3">
+                        {selectedMember.qualifications.map((q, j) => (
+                           <li key={j} className="flex items-center gap-3 text-sm text-gray-600">
+                             <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                             {q}
+                           </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center gap-2 text-primary font-bold tracking-widest text-xs uppercase mb-4">
+                        <Briefcase className="w-4 h-4 text-accent" /> Professional Experience
+                      </div>
+                      <p className="text-sm text-gray-600 leading-relaxed bg-gray-50 p-6 rounded-3xl border border-gray-100">
+                        {selectedMember.experience}
+                      </p>
+                    </div>
+
+                    {selectedMember.email && (
+                      <a href={`mailto:${selectedMember.email}`} className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-full font-bold text-sm hover:bg-accent transition-all shadow-lg shadow-primary/20">
+                        <Mail className="w-4 h-4" /> Reach Out
+                        <ArrowRight className="w-4 h-4" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* Core Foundations */}

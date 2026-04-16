@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Leaf, ShieldCheck, Microscope, Globe, Factory, Zap, MapPin, Mail, Phone } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, Leaf, Microscope, Globe, Factory, MapPin, Mail, Phone, ChevronRight } from "lucide-react";
+import { allProducts } from "@/data/products";
 
 export default function Home() {
   const fadeInUp = {
@@ -89,7 +91,7 @@ export default function Home() {
                 href="/products" 
                 className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-full hover:bg-white/20 transition-all"
               >
-                Explore Catalogue
+                Our Brands
               </Link>
             </motion.div>
           </motion.div>
@@ -100,7 +102,14 @@ export default function Home() {
       <section className="relative -mt-16 z-20 pb-20 px-4">
         <div className="container mx-auto">
           <motion.div 
-            {...fadeInUp}
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            variants={{
+              initial: { opacity: 0, y: 30 },
+              whileInView: { opacity: 1, y: 0 }
+            }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="grid grid-cols-2 md:grid-cols-4 gap-4 p-8 bg-background border border-primary/10 rounded-[3rem] shadow-2xl backdrop-blur-xl"
           >
             {[
@@ -191,7 +200,17 @@ export default function Home() {
              <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/20 rounded-full blur-[120px] -ml-48 -mb-48"></div>
         </div>
         <div className="container mx-auto px-4 relative z-10 text-center">
-            <motion.div {...fadeInUp} className="max-w-4xl mx-auto">
+            <motion.div 
+              initial="initial"
+              whileInView="whileInView"
+              viewport={{ once: true }}
+              variants={{
+                initial: { opacity: 0, y: 30 },
+                whileInView: { opacity: 1, y: 0 }
+              }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="max-w-4xl mx-auto"
+            >
                 <span className="inline-block px-4 py-1 bg-white/10 rounded-full text-xs uppercase tracking-[0.3em] font-bold mb-8">Core Pillars</span>
                 <h2 className="text-4xl md:text-6xl font-serif font-black mb-16 leading-tight">
                     What Defines Us
@@ -219,17 +238,27 @@ export default function Home() {
       <section className="py-24 px-4 bg-background">
           <div className="container mx-auto">
               <div className="flex flex-col lg:flex-row items-center gap-16">
-                  <motion.div {...fadeInUp} className="lg:w-full space-y-8 text-center mx-auto max-w-4xl">
+                  <motion.div 
+                    initial="initial"
+                    whileInView="whileInView"
+                    viewport={{ once: true }}
+                    variants={{
+                      initial: { opacity: 0, y: 30 },
+                      whileInView: { opacity: 1, y: 0 }
+                    }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="lg:w-full space-y-8 text-center mx-auto max-w-4xl"
+                  >
                       <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/5 rounded-full text-primary font-bold text-sm mx-auto">
                           <Globe className="w-4 h-4" /> 
                           <span>Global Foothold</span>
                       </div>
                       <h2 className="text-4xl md:text-5xl font-serif font-black text-primary leading-tight">
-                        Our Catalogue <br /> 
+                        Our Brands <br /> 
                         <span className="text-accent italic">Trusted by Millions</span>
                       </h2>
                       <p className="text-lg text-foreground/70 leading-relaxed">
-                        Experience a legacy of purity and innovation through our diverse catalogue of premium brands, each crafted to bring natural goodness to your table.
+                        Experience a legacy of purity and innovation through our diverse range of premium brands, each crafted to bring natural goodness to your table.
                       </p>
                   </motion.div>
               </div>
@@ -240,24 +269,55 @@ export default function Home() {
                 whileInView="whileInView"
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16"
               >
-                  {[
-                    { name: "Kuvvet Cereals", desc: "Power of Nutrition - Precision-fortified cereals for pure energy." },
-                    { name: "Kuvvet Porridge", desc: "Wholesome Breakfast - Traditional grain goodness & convenience." },
-                    { name: "Liffest (Kids)", desc: "Kids' Favorite - Nutritious and fun breakfast options for magical mornings." },
-                    { name: "Liffest (Choco)", desc: "Chocolate Flavored Fun - Indulgent chocolate cereals." },
-                    { name: "Kuvvet Digest", desc: "Instant Digestion - Formulated with natural ingredients and Himalayan salt." },
-                    { name: "Kuvvet Sauces", desc: "Joy in a Jar - Premium culinary sauces and gourmet chutneys." },
-                    { name: "Kuvvet Jams", desc: "Real Fruit Goodness - Sun-ripened orchard fruit purees and jams." },
-                    { name: "Niwala", desc: "Gold Standard of Tradition - Premium Basmati rice and rich lentils." }
-                  ].map((brand, i) => (
+                  {allProducts.map((product) => (
                     <motion.div 
-                      key={i}
+                      key={product.id}
                       variants={fadeInUp}
-                      whileHover={{ scale: 1.05, y: -5 }}
-                      className="p-6 bg-white border border-primary/10 rounded-3xl shadow-lg hover:shadow-xl transition-all"
+                      whileHover={{ scale: 1.03, y: -5 }}
+                      className="group bg-white border border-primary/10 rounded-3xl shadow-lg hover:shadow-xl transition-all overflow-hidden"
                     >
-                      <h4 className="font-bold text-xl text-primary mb-2">{brand.name}</h4>
-                      <p className="text-sm text-foreground/60 leading-relaxed">{brand.desc}</p>
+                      <Link href={`/products/${product.id}`} className="block">
+                        {/* Product Image */}
+                        <div 
+                          className="h-80 flex items-center justify-center p-1 relative overflow-hidden"
+                          style={{ backgroundColor: `${product.accentColor}12` }}
+                        >
+                          {product.badgeLabel && (
+                            <span
+                              className="absolute top-3 left-3 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10"
+                              style={{ backgroundColor: product.accentColor }}
+                            >
+                              {product.badgeLabel}
+                            </span>
+                          )}
+                          <Image
+                            src={product.heroImg}
+                            alt={product.name}
+                            width={180}
+                            height={160}
+                            className="object-contain w-full h-full group-hover:scale-110 transition-transform duration-500"
+                            unoptimized
+                            priority
+                          />
+                        </div>
+                        {/* Info */}
+                        <div className="p-5 border-t border-gray-50">
+                          <span 
+                            className="text-[10px] uppercase tracking-widest font-bold"
+                            style={{ color: product.accentColor }}
+                          >
+                            {product.brand}
+                          </span>
+                          <h4 className="font-bold text-lg text-primary mt-1 mb-1 group-hover:text-accent transition-colors">{product.name}</h4>
+                          <p className="text-xs text-foreground/60 leading-relaxed line-clamp-2">{product.tagline}</p>
+                          <div className="mt-3 flex items-center justify-between">
+                            <span className="text-[10px] text-foreground/40">{product.variants.length} variants</span>
+                            <span className="text-primary text-xs font-semibold flex items-center gap-0.5 group-hover:gap-1.5 transition-all">
+                              View <ChevronRight className="w-3 h-3" />
+                            </span>
+                          </div>
+                        </div>
+                      </Link>
                     </motion.div>
                   ))}
               </motion.div>
@@ -267,7 +327,17 @@ export default function Home() {
       {/* 6. Contact Us / Let's Connect CTA */}
       <section className="py-24 px-4 bg-white border-t border-primary/5">
         <div className="container mx-auto">
-            <motion.div {...fadeInUp} className="max-w-4xl mx-auto text-center space-y-10">
+            <motion.div 
+              initial="initial"
+              whileInView="whileInView"
+              viewport={{ once: true }}
+              variants={{
+                initial: { opacity: 0, y: 30 },
+                whileInView: { opacity: 1, y: 0 }
+              }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="max-w-4xl mx-auto text-center space-y-10"
+            >
                 <h2 className="text-4xl font-serif font-black text-primary">Let&apos;s Connect</h2>
                 <p className="text-foreground/60 text-lg">Have questions about our products or interested in becoming a distributor? We&apos;d love to hear from you. Reach out to us through any of the channels below.</p>
                 

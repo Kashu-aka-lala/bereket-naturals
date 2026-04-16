@@ -41,10 +41,10 @@ export default function Footer() {
           <div>
             <h4 className="text-white text-lg font-bold mb-6 tracking-wide uppercase">Quick Links</h4>
             <ul className="space-y-4 text-sm">
-              <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link href="/products" className="hover:text-primary transition-colors">Our Foods</Link></li>
-              <li><Link href="/csr" className="hover:text-primary transition-colors">Sustainability</Link></li>
-              <li><Link href="/investors" className="hover:text-primary transition-colors">Investor Relations</Link></li>
+              <li><Link href="/about" className="hover:text-accent transition-colors">About Us</Link></li>
+              <li><Link href="/products" className="hover:text-accent transition-colors">Our Foods</Link></li>
+              <li><Link href="/factory" className="hover:text-accent transition-colors">Factory</Link></li>
+              <li><Link href="/alliances" className="hover:text-accent transition-colors">Alliances</Link></li>
             </ul>
           </div>
 
@@ -52,10 +52,10 @@ export default function Footer() {
           <div>
             <h4 className="text-white text-lg font-bold mb-6 tracking-wide uppercase">Corporate</h4>
             <ul className="space-y-4 text-sm">
-              <li><Link href="/careers" className="hover:text-primary transition-colors">Careers</Link></li>
-              <li><Link href="/media" className="hover:text-primary transition-colors">Media & News</Link></li>
-              <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
-              <li><Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/careers" className="hover:text-accent transition-colors">Careers</Link></li>
+              <li><Link href="/media" className="hover:text-accent transition-colors">Media Gallery</Link></li>
+              <li><Link href="/contact" className="hover:text-accent transition-colors">Contact Us</Link></li>
+              <li><Link href="/privacy" className="hover:text-accent transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
 

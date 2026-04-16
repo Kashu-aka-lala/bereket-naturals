@@ -1,7 +1,6 @@
 "use client";
 
 import { Briefcase, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
 
 export default function CareersPage() {
   return (
@@ -25,7 +24,7 @@ export default function CareersPage() {
              <p className="text-gray-500 max-w-lg mx-auto mb-8">
                We are always looking for exceptional talent. While there are no open roles at this time, you may submit your credentials for future opportunities.
              </p>
-             <a href="mailto:careers@bereketfoods.com?subject=Future Talent Inquiry" className="inline-flex items-center gap-2 bg-foreground hover:bg-gray-800 text-white font-semibold px-8 py-4 rounded-full transition-all shadow-md">
+             <a href="mailto:md@bereketfoods.com,m.aitisam@bereketfoods.com,usama.khan@bereketfoods.com?subject=Future Talent Inquiry - CV Submission" className="inline-flex items-center gap-2 bg-foreground hover:bg-gray-800 text-white font-semibold px-8 py-4 rounded-full transition-all shadow-md">
                 Submit Your CV <ArrowRight className="w-5 h-5" />
              </a>
           </div>
